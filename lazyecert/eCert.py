@@ -24,9 +24,8 @@ def cli(out_dir, excel_file, config_file, template, coordinate_x, coordinate_y, 
         print(config_file)
     # load names from excel
     Name = excel_parser(excel_file)
-
     certGenerator(Name,font,template,coordinate_x,coordinate_y,filename,out_dir)
-
+    exit()
 
 def excel_parser(excel_file):
     print('fetching names from your excel file...')
@@ -55,17 +54,40 @@ def certGenerator(entries, font, template, _x, _y, filename, output_path):
     else:
         os.makedirs(output_path,exist_ok=True)
     try:
-        for i in range(1,6):
+        for i in range(0,len(entries)):
             certificate = Image.open(template)
             draw = ImageDraw.Draw(certificate)
-            myfont = ImageFont.truetype(font,size=148)
-            color = 'rgb(45, 52, 54)'
             name , email = entries[i]
-            print('Printing certificate for :' + name)
-            draw.text((_x, _y), name, fill=color, font=myfont)
-            os.makedirs(output_path + "/" + email,exist_ok=True)
-            certificate.save(output_path + "/" + email +"/" + filename + '_'+ name + '.png')
+
+            myfont = ImageFont.truetype(font,size=textAdjust(name))
+            color = 'rgb(245, 167, 19)'
+            print('Generating certificate for : ' + name)
+            new_X , new_Y = coordinateAdjust(name,_x,_y)
+            draw.text((new_X,new_Y), name, fill=color, font=myfont)
+            os.makedirs(output_path + os.sep + email,exist_ok=True)
+            certificate.save(os.path.join(output_path, email+(os.sep), filename + '_' + goAwayWhitespaceDamnit(name) + '.png'))
 
             del draw
     except:
         traceback.print_exc()
+
+def textAdjust(name):
+    max_length = 21
+    max_fontsize = 148
+
+    curr_length = len(name)
+    return max_fontsize - ((curr_length - max_length) * 4)
+
+def coordinateAdjust(name,x,y):
+    max_length = 21
+    curr_length = len(name)
+
+
+    new_x =  x - ((curr_length - max_length) * 9)
+    new_y =  y + ((curr_length - max_length) * 7)
+
+    return new_x,new_y
+
+def goAwayWhitespaceDamnit(name):
+    return name.replace(' ', '-')
+
