@@ -19,6 +19,12 @@ setup(name='Lazy-eCert',
       zip_safe=True,
       install_requires=[
            'CLick',
+           'numpy',
+           'openpyxl',
+           'pandas',
+           'PasteScript',
+           'pillow',
+           
       ],
         entry_points={
             'console_scripts': [
