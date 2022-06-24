@@ -65,29 +65,30 @@ def certGenerator(entries, font, template, _x, _y, filename, output_path):
             new_X , new_Y = coordinateAdjust(name,_x,_y)
             draw.text((new_X,new_Y), name, fill=color, font=myfont)
             os.makedirs(output_path + os.sep + email,exist_ok=True)
-            certificate.save(os.path.join(output_path, email+(os.sep), filename + '_' + goAwayWhitespaceDamnit(name) + '.png'))
+
+  
+            certificate.save(os.path.join(output_path, email+(os.sep), filename + '_' + goAwayWhitespaceDamnit(name) + '.png'), quality= 85, optimize=True)
 
             del draw
     except:
         traceback.print_exc()
 
 def textAdjust(name):
-    max_length = 21
-    max_fontsize = 148
+    max_length = 30
+    max_fontsize = 188
 
     curr_length = len(name)
-    return max_fontsize - ((curr_length - max_length) * 4)
+    return max_fontsize - ((curr_length - max_length) * 2)
 
 def coordinateAdjust(name,x,y):
     max_length = 21
     curr_length = len(name)
 
 
-    new_x =  x - ((curr_length - max_length) * 9)
-    new_y =  y + ((curr_length - max_length) * 7)
+    new_x =  x - ((curr_length - max_length) * 20)
+    new_y =  y + ((curr_length - max_length) * 2)
 
     return new_x,new_y
 
 def goAwayWhitespaceDamnit(name):
     return name.replace(' ', '-')
-
