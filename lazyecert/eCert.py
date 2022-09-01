@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw, ImageFont
 @click.option('--coordinate-y', type=int, help='Coordinates on the certificate where will be printing the name ')
 
 def cli(out_dir, excel_file, config_file, template, coordinate_x, coordinate_y, font, filename):
-    """Stupid Cli app for bulk e-certificate generator and deployer via email."""
+    """Stupid python Cli app for bulk generating of e-Certificates"""
     # check first if config file exists
     if config_file is None:
         print('Config file is missing, skipping...')
